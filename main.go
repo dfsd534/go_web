@@ -1,35 +1,23 @@
 package main
 
 import (
-	"github.com/dfsd534/go_web/data"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func main() {
-	mux := http.NewServeMux()
-	files := http.FileServer(http.Dir("/public"))
-	mux.Handle("/static", http.StripPrefix("/static", files))
-
-	mux.HandleFunc("/", index)
-
-	server := &http.Server{
-		Addr:    "0.0.0.0:8081",
-		Handler: mux,
+func someJson(c *gin.Context) {
+	data := map[string]interface{}{
+		"lang": "  语言",
+		"tag":  "  <br>",
 	}
-
-	server.ListenAndServe()
+	c.JSON(http.StatusOK, data)
+	c.AsciiJSON(http.StatusOK, data)
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
-	if threads, err := data.Threads(); err == nil {
-		_, err := session(w, r)
-		public_tmpl_files := []string{"layout", "public.navbar", "index"}
-		private_tmpl_files := []string{"layout", "private.navbar", "index"}
+func main() {
+	r := gin.Default()
 
-		if err != nil {
-			generateHTML(w, threads, public_tmpl_files...)
-		} else {
-			generateHTML(w, threads, private_tmpl_files...)
-		}
-	}
+	r.GET("/someJson", someJson)
+
+	r.Run(":8080")
 }
