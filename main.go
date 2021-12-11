@@ -14,10 +14,15 @@ func someJson(c *gin.Context) {
 	c.AsciiJSON(http.StatusOK, data)
 }
 
+func index(c *gin.Context) {
+	c.String(http.StatusOK, "Hello World!")
+}
+
 func main() {
 	r := gin.Default()
 
+	r.GET("/", index)
 	r.GET("/someJson", someJson)
 
-	r.Run(":8080")
+	r.Run(":80")
 }
