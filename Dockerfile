@@ -12,7 +12,7 @@ WORKDIR /app
 
 COPY go_web ./
 
-RUN go build -o /go_web
+RUN #go build -o /go_web
 EXPOSE 8080
 
 CMD ["/go_web"]
