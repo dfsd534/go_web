@@ -24,5 +24,5 @@ func main() {
 	r.GET("/", index)
 	r.GET("/someJson", someJson)
 
-	r.Run(":80")
+	r.Run(":8080")
 }
